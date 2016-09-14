@@ -1,0 +1,11 @@
+{
+  "name": "angular2-quickstart",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "electron ."
+  },
+  "license": "ISC",
+  "dependencies": {
+    "angular2": "2.0.0-beta.0"
+  }
+}
