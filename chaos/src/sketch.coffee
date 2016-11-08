@@ -1,6 +1,6 @@
 # coffee -bo ./app -cw ./src/
 {Particle} = require './app/particle'
-Gibber = require 'p5.gibber.js'
+# Gibber = require 'p5.gibber.js'
 
 
 count = 1000
@@ -24,7 +24,6 @@ setup =  () ->
         p = new Particle(x, y, vx, vy, type, force)
         @particles.push(p)
 
-    @a = Sine {}
 
 
 draw = () ->
@@ -78,7 +77,7 @@ draw = () ->
     # console.log total
     # total = constrain total, -10000, 10000
     # total = constrain total 1000
-    @a.frequency = total/100
+    # @a.frequency = total/100
 
 
     # stroke(255, 0, 0)

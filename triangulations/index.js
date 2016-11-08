@@ -1,14 +1,12 @@
-var app = require('app')
-var bw = require('browser-window')
-var ipc = require('ipc')
-var fs = require('fs')
+var {app, BrowserWindow} = require('electron')
+
 
 app.on('ready', function(){
-    mw = new bw({
+    mw = new BrowserWindow({
         width: 1300,
         height: 750,
     })
-    mw.loadUrl('file://' + __dirname + '/index.html');
+    mw.loadURL('file://' + __dirname + '/index.html');
     mw.openDevTools();
 
     return mw

@@ -1,7 +1,7 @@
 # {Grid} = require '../../Utils/Grid'
 {Dot} = require './dot'
 {nearestNeighbour} = require './triangulations'
-Gibber = require 'p5.gibber.js'
+# Gibber = require 'p5.gibber.js'
 
 
 dots = []
