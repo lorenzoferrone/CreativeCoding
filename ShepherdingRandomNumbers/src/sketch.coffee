@@ -3,10 +3,12 @@
 
 dots = []
 
-numDots = 1000
+numDots = 2000
 
 setup = () ->
     createCanvas windowWidth, windowHeight
+    smooth()
+    frameRate(60)
     for i in [1 ... numDots]
         #messi linearmente
         # d = new Dot i*(windowWidth/numDots), windowHeight/2, 1
@@ -31,9 +33,6 @@ draw = () ->
     # background 51
 
     for dot, index in dots
-        dot.draw()
-
-
 
         # if dot.hasArrived(dot.target)
         #     # if dot has arrived to target, create another target
@@ -47,7 +46,7 @@ draw = () ->
         #
         # dot.arrive dot.target
 
-        leftNodes = dots.slice(0, index)
+        leftNodes = dots.slice(max(index - 500, 0), index)
         specialSpeed = (d.regularVelocity for d in leftNodes).reduce (a, b) ->
             a.add b
         , createVector 0, 0
@@ -55,6 +54,7 @@ draw = () ->
         dot.regularVelocity = dot.regularVelocity.add(createVector random(-1, 1), random(-1, 1))
         dot.velocity = specialSpeed
         dot.velocity.limit(dot.maxSpeed)
+
 
 
 
@@ -68,8 +68,12 @@ draw = () ->
             dot.location.x = 20
         if dot.location.x > windowWidth - 20
             dot.location.x = windowWidth - 20
+
+
+
         # dot.bounce()
         dot.move()
+        dot.draw()
 
 
 

@@ -8,8 +8,8 @@ class Dot
         @velocity = createVector 0, 0
         @acceleration = createVector 0, 0
 
-        @maxSpeed = random(1, 5)
-        @maxForce = random(2, 4)
+        @maxSpeed = 1
+        @maxForce = 1
 
         @velocity.limit(@maxSpeed)
 
@@ -22,6 +22,16 @@ class Dot
         steer = p5.Vector.sub(desired, @velocity)
         steer.limit @maxForce
         @applyForce steer
+
+    attract: (target) ->
+        force = p5.Vector.sub(target, @location)
+        force = force.div(force.mag()).mult 0.002
+        @applyForce force
+
+    repel: (target) ->
+        force = p5.Vector.sub(@location, target)
+        force = force.div(force.mag()) .mult 0.002
+        @applyForce force
 
     wander: (radius) ->
         angleMode(DEGREES);
@@ -71,12 +81,12 @@ class Dot
         desired.setMag(@maxSpeed)
         @steer desired
 
-    avoid: (target) ->
+    avoid: (target, distance) ->
         # the inverse of seek
         desired = p5.Vector.sub(@location, target)
         d = desired.mag()
-        if d < @sight
-            desired.setMag(map d, 0, @sight, @maxSpeed, 0)
+        if d < distance
+            desired.setMag(map d, 0, distance, @maxSpeed, 0)
         else
             desired = @velocity
 
@@ -117,8 +127,8 @@ class Dot
     draw: () ->
         # stroke 100, 100, 100, 70
         # fill 100, 100, 100, 70
-        # ellipse(@location.x, @location.y, @r, @r)
-        point @location.x, @location.y
+        ellipse(@location.x, @location.y, @r, @r)
+        # point @location.x, @location.y
 
 
 
