@@ -1,0 +1,12 @@
+{
+  "name": "empyStarter",
+  "version": "1.0.0",
+  "watch": {
+      "test": "{src,test}/*.js"
+  },
+  "scripts": {
+    "start": "electron .",
+    "watch": "rapydscript src/sketch.py -6 -b -o src/sketch.js"
+  },
+  "license": "ISC"
+}

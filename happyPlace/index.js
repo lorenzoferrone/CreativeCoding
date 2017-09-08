@@ -1,5 +1,6 @@
 var {app, BrowserWindow} = require('electron')
 
+
 app.on('ready', function(){
     mw = new BrowserWindow({
         width: 1300,
@@ -10,3 +11,4 @@ app.on('ready', function(){
 
     return mw
 });
+app.commandLine.appendSwitch('enable-javascript-harmony')

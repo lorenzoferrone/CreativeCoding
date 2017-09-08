@@ -1,7 +1,7 @@
 # coffee -bo ./ -cw ./
-{Grid, Dot} = require './app/grid'
-{Walker} = require './app/walker'
-{sample, polygonal} = require './app/utility'
+{Grid, Dot} = require './grid'
+{Walker} = require './walker'
+{sample, polygonal} = require './utility'
 
 setup =  () ->
     createCanvas windowWidth, windowHeight

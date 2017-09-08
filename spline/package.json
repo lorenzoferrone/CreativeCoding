@@ -1,0 +1,14 @@
+{
+  "name": "angular2-quickstart",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "electron .",
+    "build": "coffee -bo ./app -cw ./src/",
+    "kill": "killall -9 node",
+    "buildStart": "npm run-script build & npm start"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "angular2": "2.0.0-beta.0"
+  }
+}

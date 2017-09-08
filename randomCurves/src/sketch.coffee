@@ -59,17 +59,17 @@ setup = () ->
     createCanvas windowWidth, windowHeight
 
     # create chars based on shuffled circles
-    # for char in [1 ... numChar]
-    #     dots = []
-    #     #choose coordinate on a circle
-    #     for i in [1 .. random(7, numDots)]
-    #         dots.push
-    #             x: char * (windowWidth/numChar) + 50*Math.cos(2* i * Math.PI/numDots)
-    #             y: windowHeight/2 + 50*Math.sin(2* i * Math.PI/numDots)
-    #     # @dots = ({x: random(windowWidth), y: random(windowHeight)} for _ in [1.. numDots])
-    #
-    #         fisherYates dots
-    #         chars.push dots
+    for char in [1 ... numChar]
+        dots = []
+        #choose coordinate on a circle
+        for i in [1 .. random(7, numDots)]
+            dots.push
+                x: char * (windowWidth/numChar) + 50*Math.cos(2* i * Math.PI/numDots)
+                y: windowHeight/2 + 50*Math.sin(2* i * Math.PI/numDots)
+        # @dots = ({x: random(windowWidth), y: random(windowHeight)} for _ in [1.. numDots])
+
+            fisherYates dots
+            chars.push dots
 
     # create a single grid
 
@@ -82,11 +82,11 @@ draw = () ->
     background 51
     # strokeWeight 2
 
-    char = [
-        [0, 0, 1, 2],
-        [5, 6, 7, 7],
-        [3, 3, 5, 2]
-    ]
+    # char = [
+    #     [0, 0, 1, 2],
+    #     [5, 6, 7, 7],
+    #     [3, 3, 5, 2]
+    # ]
 
     for stroke in char
         drawChar grid, stroke

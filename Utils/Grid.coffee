@@ -1,10 +1,12 @@
 class Cell
     constructor: (@x, @y) ->
+        @color = [100, 100, 100, 100]
 
-    draw: (color) ->
-        stroke color
+    draw: () ->
+        stroke @color
+        fill @color
         ellipse @x, @y, 10, 10
-        stroke 100, 100, 100, 200
+        # stroke 100, 100, 100, 200
 
 
 class @Grid
@@ -13,22 +15,39 @@ class @Grid
         @sclHeight = floor height /(@column + 1)
         @cells = []
         for i in [0 ... @row]
+            r = []
             for j in [0 ... @column]
-                @cells.push(new Cell (i+1)*@sclWidth, (j+1)*@sclHeight)
-                # ellipse i*@sclWidth, j*@sclHeight, 10, 10
+                c = new Cell (i+1)*@sclWidth, (j+1)*@sclHeight
+                c.i = i
+                c.j = j
+                r.push c
+                # @cells.push(c)
+            @cells.push r
+
+
+    getNeighbours: (cell) ->
+        x = cell.i
+        y = cell.j
+
+        N = [@get(x + 1, y),
+             @get(x, y + 1),
+             @get(x - 1, y),
+             @get(x, y - 1)
+            #  @get(x + 1, y + 1),
+            #  @get(x - 1, y - 1),
+            #  @get(x + 1, y - 1),
+            #  @get(x - 1, y + 1)
+            ]
+        N = N.filter((element) -> element != undefined)
+        return N
+        # return []
 
 
     draw: ->
-        for cell in @cells
-            # console.log cell
-            if cell.selected == true
-                c = color 100, 200, 100, 200
-            else
-                c = color 100, 100, 100, 200
-            cell.draw(c)
+        for row in @cells
+            for cell in row
+                cell.draw()
 
     get: (x, y) ->
         try
-            return @cells[y*@column + x]
-        catch
-            console.log 'out of bounds'
+            return @cells[x][y]
