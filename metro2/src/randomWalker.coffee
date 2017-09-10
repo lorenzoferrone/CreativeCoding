@@ -1,2 +1,0 @@
-class Walker
-    constructor: (@grid) ->
