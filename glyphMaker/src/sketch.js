@@ -1,30 +1,51 @@
+var fs = require('fs')
 var {Grid} = require('./grid')
 var {Line} = require('./line')
 
+
 var grid
-var path = []
-var inp
+var paths = []
 var drawgrid = true
+var transparency = 100
+
+
+var savebtn
+
+const saved = JSON.parse(fs.readFileSync('./src/saved.json'))
+console.log(saved)
+
 
 
 
 const setup = () => {
-    createCanvas(windowWidth, windowHeight - 40)
-    inp = createInput('')
-    inp.input(myInput)
-    grid = new Grid(70)
-}
+    c = createCanvas(windowWidth - 250, windowHeight)
+    c.parent('c')
 
+    const inp = document.getElementById('input')
+    inp.oninput = () => {
+        // prima divido con eventuali ":"
+        const strokes = inp.value.split(":")
+        paths = strokes.map(stroke => stroke.split("").map(letter => grid.get(letter)))
+    }
 
-const myInput = () => {
-    const s = inp.value().split("")
-    path = s.map(letter => grid.get(letter))
-    // for (letter of s){
+    const s = document.getElementById('save')
+    s.onclick = () => {
+        console.log(inp.value)
+    }
+    // inp = createInput('')
+    // inp.input(myInput)
+    // inp.parent('comandi')
     //
-    //     const dot = grid.get(letter)
-    //     path.push(dot)
-    // }
+    const t = document.getElementById('toggle')
+    t.onclick = () => {
+        drawgrid = !drawgrid
+        transparency == 100? transparency = 255 : transparency = 100
+    }
 
+    //
+    // savebtn.parent('comandi')
+
+    grid = new Grid(70)
 }
 
 
@@ -32,13 +53,15 @@ const draw = () => {
     background(151)
     if (drawgrid) grid.draw()
     noFill()
-    beginShape()
-    strokeWeight(5)
-    stroke(20, 20, 20, 100)
-    for (dot of path){
-        curveVertex(dot.x, dot.y)
+    strokeWeight(25)
+    stroke(20, 20, 20, transparency)
+    for (var path of paths) {
+        beginShape()
+        for (dot of path){
+            curveVertex(dot.x, dot.y)
+        }
+        endShape()
     }
-    endShape()
     strokeWeight(1)
 
     //
@@ -49,8 +72,10 @@ const touchStarted = () => {
 }
 
 const keyTyped = () => {
-    if (key == 'g') {
-        drawgrid = !drawgrid
+    if (key == 'z') {
+        drawgrid = false
+        saveCanvas('prova', 'png')
+        drawgrid = true
     }
 
 }

@@ -9,8 +9,8 @@ class Grid {
             for (var j = 0; j <= N; j++) {
                 this.dots.push({
                     label: alphabet[k],
-                    x: j * this.distance + (windowWidth / 2) - (this.distance * N / 2),
-                    y: i * this.distance + (windowHeight / 2) - (this.distance * N / 2),
+                    x: j * this.distance + (width / 2) - (this.distance * N / 2),
+                    y: i * this.distance + (height / 2) - (this.distance * N / 2),
                 })
                 k++
             }
