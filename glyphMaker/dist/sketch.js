@@ -16,20 +16,30 @@ var _require = require('react'),
 var _require2 = require('react-dom'),
     render = _require2.render;
 
+var canvasBuffer = require('electron-canvas-to-buffer');
+
+var _require3 = require('electron'),
+    clipboard = _require3.clipboard;
+
+var _require4 = require('electron'),
+    nativeImage = _require4.nativeImage;
+
 var fs = require('fs');
 
-var _require3 = require('./grid'),
-    Grid = _require3.Grid;
+var _require5 = require('./grid'),
+    Grid = _require5.Grid;
 
-var _require4 = require('./line'),
-    Line = _require4.Line;
+var _require6 = require('./line'),
+    Line = _require6.Line;
 
 var grid;
 var paths = [];
 var drawgrid = true;
 var transparency = 100;
 
-var saved = {}; //JSON.parse(fs.readFileSync('./src/saved.json'))
+var c;
+
+var saved = JSON.parse(fs.readFileSync('./src/saved.json'));
 console.log(saved);
 
 var toggle = function toggle() {
@@ -70,6 +80,11 @@ var Input_ = function (_Component) {
             saved[_this.name.value] = _this.letter.value;
             fs.writeFileSync('./src/saved.json', JSON.stringify(saved));
             _this.forceUpdate();
+        };
+
+        _this.copy = function () {
+            var buffer = canvasBuffer(c.elt, 'image/png');
+            clipboard.writeImage(nativeImage.createFromBuffer(buffer));
         };
 
         return _this;
@@ -127,7 +142,13 @@ var Input_ = function (_Component) {
                     React.createElement(
                         'button',
                         { onClick: toggle },
-                        'Toggle'
+                        'Toggle Grid'
+                    ),
+                    React.createElement(
+                        'button',
+                        { onClick: this.copy },
+                        ' ',
+                        'Copy'
                     )
                 ),
                 React.createElement('hr', null),
@@ -165,8 +186,9 @@ var App = function (_Component2) {
 render(React.createElement(App, null), document.getElementById('root'));
 
 var setup = function setup() {
-    var c = createCanvas(windowWidth - 250, windowHeight);
+    c = createCanvas(windowWidth - 250, windowHeight);
     c.parent('c');
+    console.log(c);
     grid = new Grid(70);
 };
 
@@ -236,6 +258,7 @@ var touchStarted = function touchStarted() {};
 
 var keyTyped = function keyTyped() {
     if (key == 'z') {
+
         drawgrid = false;
         saveCanvas('prova', 'png');
         drawgrid = true;

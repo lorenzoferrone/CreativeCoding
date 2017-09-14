@@ -15,17 +15,18 @@ var grid
 var paths = []
 var drawgrid = true
 var transparency = 100
+var back = 151
 
 var c
 
 
 
 var saved = JSON.parse(fs.readFileSync('./src/saved.json'))
-console.log(saved)
 
 const toggle = () => {
     drawgrid = !drawgrid
     transparency == 100? transparency = 255 : transparency = 100
+    // back == 151? back = 255 : back = 151
 }
 
 class Input_ extends Component {
@@ -36,13 +37,17 @@ class Input_ extends Component {
 
     draw_ = () => {
         const strokes = this.letter.value.split(":")
-        paths = strokes.map(stroke => stroke.split("").map(letter => grid.get(letter)).filter(l => l != undefined))
+        paths = strokes.map(
+            stroke => stroke.split("").map(
+                letter => grid.get(letter)
+            ).filter(l => l != undefined)
+        )
+
+        console.log()
     }
 
     onChange = (e) => {
-        console.log(e)
-        const strokes = e.target.value.split(":")
-        paths = strokes.map(stroke => stroke.split("").map(letter => grid.get(letter)))
+        this.draw_()
     }
 
     onClick = () => {
@@ -115,16 +120,15 @@ render(
 const setup = () => {
     c = createCanvas(windowWidth - 250, windowHeight)
     c.parent('c')
-    console.log(c)
-    grid = new Grid(70)
+    grid = new Grid(140)
 }
 
 
 const draw = () => {
-    background(151)
+    background(back)
     if (drawgrid) grid.draw()
     noFill()
-    strokeWeight(35)
+    strokeWeight(60)
     stroke(20, 20, 20, transparency)
     for (var path of paths) {
         beginShape()
@@ -139,18 +143,18 @@ const draw = () => {
 }
 
 
-const touchStarted = () => {
-}
-
-const keyTyped = () => {
-    if (key == 'z') {
-
-        drawgrid = false
-        saveCanvas('prova', 'png')
-        drawgrid = true
-    }
-
-}
+// const touchStarted = () => {
+// }
+//
+// const keyTyped = () => {
+//     if (key == 'z') {
+//
+//         drawgrid = false
+//         saveCanvas('prova', 'png')
+//         drawgrid = true
+//     }
+//
+// }
 
 
 // hhrlhnww
@@ -164,5 +168,3 @@ const keyTyped = () => {
 
 window.setup = setup
 window.draw = draw
-window.touchStarted = touchStarted
-window.keyTyped = keyTyped
