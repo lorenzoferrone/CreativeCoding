@@ -2,6 +2,10 @@ var React = require('react')
 var {Component} = require('react')
 var {render} = require('react-dom')
 
+var canvasBuffer = require('electron-canvas-to-buffer')
+const {clipboard} = require('electron')
+const {nativeImage} = require('electron')
+
 
 var fs = require('fs')
 var {Grid} = require('./grid')
@@ -11,6 +15,8 @@ var grid
 var paths = []
 var drawgrid = true
 var transparency = 100
+
+var c
 
 
 
@@ -45,6 +51,11 @@ class Input_ extends Component {
         this.forceUpdate()
     }
 
+    copy = () => {
+        var buffer = canvasBuffer(c.elt, 'image/png')
+        clipboard.writeImage(nativeImage.createFromBuffer(buffer))
+    }
+
     render() {
 
         var lista = []
@@ -69,7 +80,8 @@ class Input_ extends Component {
                     <input ref={(input) => { this.name = input; }} placeholder={'name'} />
                     <input ref={(input) => { this.letter = input; }} onChange={this.onChange}/>
                     <button onClick={this.onClick}>{'save'}</button>
-                    <button onClick={toggle}>{'Toggle'}</button>
+                    <button onClick={toggle}>{'Toggle Grid'}</button>
+                    <button onClick={this.copy}> {'Copy'}</button>
                 </div>
                 <hr />
                 {lista}
@@ -101,8 +113,9 @@ render(
 
 
 const setup = () => {
-    const c = createCanvas(windowWidth - 250, windowHeight)
+    c = createCanvas(windowWidth - 250, windowHeight)
     c.parent('c')
+    console.log(c)
     grid = new Grid(70)
 }
 
@@ -131,6 +144,7 @@ const touchStarted = () => {
 
 const keyTyped = () => {
     if (key == 'z') {
+
         drawgrid = false
         saveCanvas('prova', 'png')
         drawgrid = true
