@@ -18,10 +18,10 @@ var _require2 = require('react-dom'),
 
 var fs = require('fs');
 
-var _require3 = require('./dist/grid'),
+var _require3 = require('./grid'),
     Grid = _require3.Grid;
 
-var _require4 = require('./dist/line'),
+var _require4 = require('./line'),
     Line = _require4.Line;
 
 var grid;
@@ -29,12 +29,8 @@ var paths = [];
 var drawgrid = true;
 var transparency = 100;
 
-var saved = JSON.parse(fs.readFileSync('./src/saved.json'));
+var saved = {}; //JSON.parse(fs.readFileSync('./src/saved.json'))
 console.log(saved);
-
-// for (var letter in saved) {
-//     document.getElementById('lista').append()
-// }
 
 var toggle = function toggle() {
     drawgrid = !drawgrid;

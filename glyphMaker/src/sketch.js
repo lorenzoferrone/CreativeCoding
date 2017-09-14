@@ -4,8 +4,8 @@ var {render} = require('react-dom')
 
 
 var fs = require('fs')
-var {Grid} = require('./dist/grid')
-var {Line} = require('./dist/line')
+var {Grid} = require('./grid')
+var {Line} = require('./line')
 
 var grid
 var paths = []
@@ -14,12 +14,8 @@ var transparency = 100
 
 
 
-var saved = JSON.parse(fs.readFileSync('./src/saved.json'))
+var saved = {} //JSON.parse(fs.readFileSync('./src/saved.json'))
 console.log(saved)
-
-// for (var letter in saved) {
-//     document.getElementById('lista').append()
-// }
 
 const toggle = () => {
     drawgrid = !drawgrid
@@ -82,11 +78,6 @@ class Input_ extends Component {
         )
     }
 }
-
-
-
-
-
 
 
 class App extends Component {
