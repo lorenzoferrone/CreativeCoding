@@ -14,7 +14,7 @@ var transparency = 100
 
 
 
-var saved = {} //JSON.parse(fs.readFileSync('./src/saved.json'))
+var saved = JSON.parse(fs.readFileSync('./src/saved.json'))
 console.log(saved)
 
 const toggle = () => {
